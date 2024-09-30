@@ -102,7 +102,7 @@ func (p *parser) ReadRepeatField(ctx parseCtx, data []byte, wireType int, elemen
 	var err error
 
 	if element.Type.Category() == NamedDataTypeCategory {
-		if _, ok := p.Enums[element.Type.Name()]; ok {
+		if _, ok := p.Messages[element.Type.Name()]; ok {
 			result, offset, err = p.readMsg(ctx, p.Messages[element.Type.Name()], data, offset)
 			if err != nil {
 				return

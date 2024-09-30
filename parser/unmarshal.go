@@ -52,7 +52,6 @@ func (p *parser) ReadMsgHeader(data []byte) {
 }
 
 func (p *parser) Read(data []byte) {
-	fmt.Printf("---data---%0b", data[offset])
 	header := data[offset]
 	wireType := 0x07 & header
 	tag := header >> 3
