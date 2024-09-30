@@ -15,3 +15,5 @@ proto_parser is really convient to  convert binary data in proto protocal to  js
     data := []byte{} // some proto binary data
     jsonStr, err := p.Unmarshal2Json(msgName, data)
 ```
+# issue
+if you have any problem,please submit an issue, i'll reply in time.
