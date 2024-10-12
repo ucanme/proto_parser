@@ -39,7 +39,7 @@ func (p *parser) readMsg(ctx parseCtx, messageElement MessageElement, data []byt
 	var retMap map[string]interface{}
 	msgFieldIndex := 0
 	for {
-		if offset >= len(data)-1 {
+		if offset >= len(data) {
 			break
 		}
 
@@ -50,6 +50,7 @@ func (p *parser) readMsg(ctx parseCtx, messageElement MessageElement, data []byt
 		}
 
 		tag, wireType, size := p.readHeader(data, offset)
+
 		offset += size
 
 		field := messageElement.Fields[tag]
@@ -77,6 +78,7 @@ func (p *parser) readMsg(ctx parseCtx, messageElement MessageElement, data []byt
 	//填充默认值
 	for _, field := range messageElement.Fields {
 		if _, ok := result[field.Name]; !ok {
+			fmt.Println("---->", field.Name, field.Type.Category())
 			if _, ok := result[field.Name]; !ok {
 				if field.Type.Category() == ScalarDataTypeCategory {
 					result[field.Name] = field.Type.DefaultValue()
@@ -86,7 +88,10 @@ func (p *parser) readMsg(ctx parseCtx, messageElement MessageElement, data []byt
 					} else if _, ok := p.Messages[field.Type.Name()]; ok {
 						result[field.Name] = map[string]string{}
 					}
-
+				} else if field.Type.Category() == EnumDataTypeCategory {
+					if _, ok := p.Enums[field.Type.Name()]; ok {
+						result[field.Name] = 0
+					}
 				} else if field.Type.Category() == MapDataTypeCategory {
 					result[field.Name] = field.Type.DefaultValue()
 				}
