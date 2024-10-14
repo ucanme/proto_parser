@@ -44,9 +44,8 @@ message StateMsg {
     State state                  = 2;
     STStateDetailed st_state_detailed = 3;
     LiveState live_state = 4;
-}`
-`
-	p, err := parser.Parse([]byte(msgStr))
+}
+ p, err := parser.Parse([]byte(msgStr))
 ```
 2. unmarshal binary data to json string
 ```go
